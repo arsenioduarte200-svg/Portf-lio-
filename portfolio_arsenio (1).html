@@ -276,9 +276,40 @@
   .log-desc{color:var(--text-dim);font-size:14.5px;max-width:640px;}
 
   /* ---------- projects ---------- */
+  .proj-featured{
+    background:linear-gradient(160deg, var(--bg-panel) 0%, var(--bg-panel-2) 100%);
+    border:1px solid var(--teal);
+    border-radius:var(--radius);
+    padding:28px 30px;
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .proj-featured::before{
+    content:"destaque";
+    position:absolute;
+    top:0;right:0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:#10141a;
+    background:var(--teal);
+    padding:5px 12px;
+    border-bottom-left-radius:6px;
+  }
+  .proj-featured .proj-title{font-size:19px;}
+  .proj-featured-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:26px;
+    margin-top:14px;
+  }
+  @media (max-width:640px){ .proj-featured-grid{grid-template-columns:1fr;} }
+
   .proj-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:20px;
   }
   .proj-card{
@@ -286,6 +317,8 @@
     border:1px solid var(--rule);
     border-radius:var(--radius);
     padding:22px;
+    display:flex;
+    flex-direction:column;
     transition:border-color .2s ease, transform .2s ease;
   }
   .proj-card:hover{border-color:var(--teal);transform:translateY(-3px);}
@@ -299,11 +332,13 @@
     border-radius:4px;
     display:inline-block;
     margin-bottom:12px;
+    width:fit-content;
   }
   .proj-title{font-weight:600;font-size:16px;margin-bottom:8px;}
   .proj-desc{color:var(--text-dim);font-size:14px;}
   .proj-stack{
-    margin-top:14px;
+    margin-top:auto;
+    padding-top:14px;
     display:flex;
     flex-wrap:wrap;
     gap:6px;
@@ -316,6 +351,40 @@
     padding:2px 7px;
     border-radius:4px;
   }
+  .proj-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:14px 0 6px;
+  }
+  .proj-list{list-style:none;}
+  .proj-list li{
+    position:relative;
+    padding-left:15px;
+    color:var(--text-dim);
+    font-size:13px;
+    margin-bottom:4px;
+    line-height:1.5;
+  }
+  .proj-list li::before{
+    content:"›";
+    position:absolute;
+    left:0;
+    color:var(--teal);
+    font-weight:700;
+  }
+  .proj-result{
+    margin-top:12px;
+    padding:10px 12px;
+    background:rgba(73,179,166,0.07);
+    border-left:2px solid var(--teal);
+    border-radius:0 4px 4px 0;
+    font-size:13px;
+    color:var(--text);
+  }
+  .proj-result b{color:var(--teal);}
 
   /* ---------- certifications ---------- */
   .cert-grid{
@@ -443,21 +512,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="terminal">
-      <div class="terminal-head">
-        <span></span><span></span><span></span>
-        <div class="title">bash — status.sh</div>
-      </div>
-      <div class="terminal-body" id="termBody">
-        <div class="line"><span class="prompt">arsenio@itel</span><span class="mono">:~$</span> <span class="cmd">whoami</span></div>
-        <div class="out">arsenio.duarte.almeida</div>
-        <div class="line"><span class="prompt">arsenio@itel</span><span class="mono">:~$</span> <span class="cmd">systemctl status carreira.service</span></div>
-        <div class="out">● carreira.service — Engenharia Informática @ ISPTEC<br>
-        &nbsp;&nbsp;Loaded: enabled (Camama, Luanda, Angola)<br>
-        &nbsp;&nbsp;Active: <span class="status-active">active (running)</span> since 2024<br>
-        &nbsp;&nbsp;Objetivo: Administrador de Sistemas<span class="cursor"></span></div>
-      </div>
-    </div>
+    
 
     <h1 class="hero-name">Arsénio Duarte de Almeida</h1>
     <div class="hero-role">estudante de engenharia informática · em formação para administrador de sistemas</div>
@@ -558,23 +613,81 @@
   <div class="wrap">
     <div class="eyebrow">deploys</div>
     <h2 class="sec-title">Projetos</h2>
+
+    <div class="proj-featured reveal">
+      <span class="proj-tag">Projeto Final de Curso · Acessibilidade</span>
+      <div class="proj-title">Luva de Tradução Gestual</div>
+      <div class="proj-desc">Protótipo capaz de traduzir gestos da Língua Gestual para texto e/ou áudio em tempo real — projeto final de curso no ITEL, com foco em inclusão social.</div>
+      <div class="proj-featured-grid">
+        <div>
+          <div class="proj-label">Atividades realizadas</div>
+          <ul class="proj-list">
+            <li>Integração de sensores flexíveis e MPU6050 para captura de movimentos da mão</li>
+            <li>Processamento e envio de dados através de ESP32</li>
+            <li>Visualização dos gestos traduzidos num dispositivo de saída</li>
+          </ul>
+        </div>
+        <div>
+          <div class="proj-label">Resultado</div>
+          <div class="proj-result">Prova de conceito funcional, validando o uso de sensores vestíveis para <b>acessibilidade e inclusão social</b>.</div>
+          <div class="proj-stack" style="margin-top:14px;padding-top:0;"><span>ESP32</span><span>MPU6050</span><span>Sensores flexíveis</span></div>
+        </div>
+      </div>
+    </div>
+
     <div class="proj-grid">
       <div class="proj-card reveal">
         <span class="proj-tag">IoT · Automação</span>
         <div class="proj-title">Sistema de Controlo e Monitoramento de Cargas</div>
-        <div class="proj-desc">Solução baseada em Arduino com interface em C#, integrando sensores de corrente e relés para monitoramento local. Versão avançada com módulo LoRa para controlo remoto de longo alcance e baixo consumo.</div>
-        <div class="proj-stack"><span>Arduino</span><span>C#</span><span>LoRa</span><span>Sensores</span></div>
+        <div class="proj-desc">Controlo e monitoramento remoto de cargas elétricas, com interface gráfica dedicada.</div>
+        <div class="proj-label">Atividades</div>
+        <ul class="proj-list">
+          <li>Programação de Arduino para leitura de sensores e controlo de relés</li>
+          <li>Interface gráfica em C# comunicando por porta serial</li>
+          <li>Evolução para módulo LoRa SX1278, eliminando a ligação por cabo</li>
+        </ul>
+        <div class="proj-result">Monitorização de consumo em tempo real e controlo a <b>longa distância</b>, com baixo consumo energético.</div>
+        <div class="proj-stack"><span>Arduino</span><span>C#</span><span>LoRa SX1278</span></div>
       </div>
+
+      <div class="proj-card reveal">
+        <span class="proj-tag">IoT · Multifuncional</span>
+        <div class="proj-title">Sistema de Controlo com ESP32</div>
+        <div class="proj-desc">Plataforma multifuncional com integração de vários módulos de hardware e ligação remota.</div>
+        <div class="proj-label">Componentes integrados</div>
+        <ul class="proj-list">
+          <li>RFID para controlo de acesso</li>
+          <li>GPS para rastreamento e LCD para exibição de dados</li>
+          <li>Servo motor, buzzer e LEDs; envio de dados via Wi-Fi para app móvel</li>
+        </ul>
+        <div class="proj-result">Sistema completo de <b>controlo e monitorização remota</b> a partir de uma única plataforma ESP32.</div>
+        <div class="proj-stack"><span>ESP32</span><span>RFID</span><span>GPS</span><span>Wi-Fi</span></div>
+      </div>
+
       <div class="proj-card reveal">
         <span class="proj-tag">Redes</span>
         <div class="proj-title">Infraestrutura de Redes — CFITEL</div>
-        <div class="proj-desc">Implementação de redes estruturadas e segmentação via VLANs em equipa, usando switches e roteadores Cisco, com configuração de serviços essenciais de rede.</div>
+        <div class="proj-desc">Implementação de redes estruturadas para laboratórios e ambientes corporativos, em equipa.</div>
+        <div class="proj-label">Atividades</div>
+        <ul class="proj-list">
+          <li>Planeamento de topologia e segmentação via VLANs</li>
+          <li>Protocolos VTP, STP e EtherChannel; serviços DHCP e SSH</li>
+          <li>Switches e roteadores Cisco, seguindo padrões CCNA</li>
+        </ul>
+        <div class="proj-result">Redes <b>otimizadas e seguras</b>, com melhor gestão de tráfego.</div>
         <div class="proj-stack"><span>Cisco</span><span>VLAN</span><span>DHCP/SSH</span><span>STP</span></div>
       </div>
+
       <div class="proj-card reveal">
         <span class="proj-tag">Académico · Java</span>
         <div class="proj-title">Football Championship Management System</div>
-        <div class="proj-desc">Sistema de gestão de campeonato de futebol desenvolvido em grupo, com design orientado a objetos e modelação de classes inspirada na La Liga.</div>
+        <div class="proj-desc">Sistema de gestão de campeonato de futebol, desenvolvido em grupo.</div>
+        <div class="proj-label">Atividades</div>
+        <ul class="proj-list">
+          <li>Modelação orientada a objetos com 10 classes inter-relacionadas</li>
+          <li>Referência estrutural inspirada na La Liga</li>
+        </ul>
+        <div class="proj-result">Entrega em equipa com <b>documentação técnica completa</b> em Word e apresentação formal.</div>
         <div class="proj-stack"><span>Java</span><span>POO</span><span>Trabalho em equipa</span></div>
       </div>
     </div>
