@@ -1,529 +1,177 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arsénio de Almeida — Administrador de Sistemas (em formação)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arsénio de Almeida — Redes, Servidores e Cibersegurança</title>
+<meta name="description" content="Portfólio de Arsénio de Almeida: Cisco CyberOps Associate, CCNA, Windows Server 2022 e Active Directory.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0A1220;
-    --panel:#0F1B2E;
-    --panel-2:#122036;
-    --line: rgba(148,178,204,0.16);
-    --line-strong: rgba(148,178,204,0.32);
-    --cyan:#5EEAD4;
-    --amber:#F5A623;
-    --text:#E9F1F7;
-    --muted:#8CA0B3;
-    --muted-2:#5E7286;
-    --radius: 2px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:
-      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(94,234,212,0.08), transparent 60%),
-      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(245,166,35,0.05), transparent 55%),
-      var(--bg);
-    color:var(--text);
-    font-family:'IBM Plex Sans', sans-serif;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  ::selection{background:var(--cyan); color:#03211d;}
-
-  /* blueprint grid */
-  .grid-bg{
-    position:fixed; inset:0; z-index:0; pointer-events:none;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:64px 64px;
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 10%, transparent 75%);
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 10%, transparent 75%);
-    opacity:0.5;
-  }
-
-  a{color:inherit;}
-  h1,h2,h3{font-family:'Space Grotesk', sans-serif; margin:0; letter-spacing:-0.01em;}
-  .mono{font-family:'IBM Plex Mono', monospace;}
-
-  .wrap{max-width:1080px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
-
-  /* ---------- NAV ---------- */
-  header.topbar{
-    position:sticky; top:0; z-index:50;
-    backdrop-filter: blur(10px);
-    background:rgba(10,18,32,0.72);
-    border-bottom:1px solid var(--line);
-  }
-  .topbar-inner{
-    max-width:1080px; margin:0 auto; padding:14px 28px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .brand{display:flex; align-items:center; gap:10px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted);}
-  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); flex:none;}
-  nav.links{display:flex; gap:26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.03em;}
-  nav.links a{color:var(--muted); text-decoration:none; text-transform:uppercase; position:relative; padding-bottom:3px; transition:color .2s;}
-  nav.links a:hover{color:var(--text);}
-  nav.links a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--cyan); transition:width .25s;}
-  nav.links a:hover::after{width:100%;}
-  @media (max-width:780px){ nav.links{display:none;} }
-
-  .burger{display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:6px;}
-  .burger span{width:20px; height:2px; background:var(--text); display:block;}
-  @media (max-width:780px){ .burger{display:flex;} }
-
-  .mobile-menu{
-    display:none; flex-direction:column; gap:0; border-top:1px solid var(--line);
-    background:rgba(10,18,32,0.98);
-  }
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{
-    padding:14px 28px; color:var(--muted); text-decoration:none; font-family:'IBM Plex Mono',monospace;
-    font-size:13px; text-transform:uppercase; letter-spacing:0.04em; border-bottom:1px solid var(--line);
-  }
-  .mobile-menu a:hover{color:var(--cyan);}
-
-  .avatar{
-    width:42px; height:42px; border-radius:50%; object-fit:cover;
-    border:1.5px solid var(--cyan); flex:none;
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{padding:88px 0 70px; position:relative;}
-  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;}
-  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
-
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em;
-    color:var(--cyan); text-transform:uppercase; margin-bottom:18px;
-    border:1px solid rgba(94,234,212,0.35); padding:5px 10px; border-radius:2px;
-    background:rgba(94,234,212,0.06);
-  }
-  .hero h1{font-size:clamp(34px,5vw,54px); line-height:1.05; font-weight:600;}
-  .hero h1 .accent{color:var(--cyan);}
-  .hero p.lead{margin:20px 0 26px; color:var(--muted); font-size:16.5px; line-height:1.65; max-width:52ch;}
-
-  .status-row{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:30px;}
-  .chip{
-    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);
-    border:1px solid var(--line); padding:6px 10px; border-radius:2px; background:var(--panel);
-    display:flex; gap:7px; align-items:center;
-  }
-  .chip b{color:var(--text); font-weight:500;}
-  .chip .led{width:6px; height:6px; border-radius:50%; background:var(--amber);}
-
-  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn{
-    font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none;
-    padding:12px 20px; border-radius:2px; display:inline-flex; align-items:center; gap:8px;
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .btn-primary{background:var(--cyan); color:#03211d; font-weight:600;}
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(94,234,212,0.18);}
-  .btn-ghost{border:1px solid var(--line-strong); color:var(--text);}
-  .btn-ghost:hover{border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px);}
-  .btn-outline-amber{border:1px solid rgba(245,166,35,0.5); color:var(--amber);}
-  .btn-outline-amber:hover{background:rgba(245,166,35,0.08); transform:translateY(-2px);}
-
-  /* topology signature */
-  .topo{position:relative; aspect-ratio:1/1; max-width:420px; margin:0 auto;}
-  .topo svg{width:100%; height:100%; overflow:visible;}
-  .topo-node-label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; fill:var(--muted); text-transform:uppercase; letter-spacing:0.04em;}
-  .pulse{ animation: pulseAnim 2.6s ease-in-out infinite; }
-  @keyframes pulseAnim{ 0%,100%{opacity:.55;} 50%{opacity:1;} }
-  .packet{ animation: travel linear infinite; }
-  @keyframes travel{ from{ offset-distance:0%; } to{ offset-distance:100%; } }
-
-  /* ---------- SECTION SCAFFOLD ---------- */
-  section{padding:64px 0; border-top:1px solid var(--line); position:relative;}
-  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:34px;}
-  .sec-tag{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--amber); letter-spacing:0.08em;}
-  .sec-head h2{font-size:clamp(22px,3vw,30px); font-weight:600;}
-  .sec-rule{flex:1; height:1px; background:linear-gradient(90deg, var(--line-strong), transparent);}
-
-  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-
-  /* ---------- PERFIL ---------- */
-  .perfil-panel{
-    background:var(--panel); border:1px solid var(--line); border-radius:2px; padding:30px 32px;
-    position:relative;
-  }
-  .perfil-panel::before{content:'PERFIL.LOG'; position:absolute; top:-10px; left:20px; background:var(--bg); padding:0 8px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--muted-2); letter-spacing:0.08em;}
-  .perfil-panel p{color:var(--muted); line-height:1.75; font-size:15.5px; margin:0 0 14px;}
-  .perfil-panel p:last-child{margin-bottom:0;}
-  .perfil-panel strong{color:var(--text); font-weight:600;}
-
-  /* ---------- SKILLS ---------- */
-  .skills-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px;}
-  .skill-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:2px; padding:20px;
-    transition:border-color .2s, transform .2s;
-  }
-  .skill-card:hover{border-color:var(--cyan); transform:translateY(-3px);}
-  .skill-card .skill-index{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber); margin-bottom:10px; display:block;}
-  .skill-card h3{font-size:15.5px; margin-bottom:10px; font-weight:600;}
-  .tag-row{display:flex; flex-wrap:wrap; gap:6px;}
-  .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); border:1px solid var(--line); padding:3px 8px; border-radius:2px;}
-
-  .lang-row{display:flex; gap:28px; margin-top:24px; flex-wrap:wrap;}
-  .lang-item{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:8px;}
-  .lang-bar{width:70px; height:4px; background:var(--panel-2); border-radius:2px; overflow:hidden; position:relative;}
-  .lang-bar span{position:absolute; inset:0; background:var(--cyan);}
-
-  /* ---------- TIMELINE (experience) ---------- */
-  .timeline{position:relative; padding-left:26px; border-left:1px solid var(--line);}
-  .tl-item{position:relative; padding-bottom:36px;}
-  .tl-item:last-child{padding-bottom:0;}
-  .tl-item::before{
-    content:''; position:absolute; left:-31px; top:4px; width:11px; height:11px; border-radius:50%;
-    background:var(--bg); border:2px solid var(--cyan);
-  }
-  .tl-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--amber); letter-spacing:0.04em; margin-bottom:6px;}
-  .tl-item h3{font-size:17px; margin-bottom:4px; font-weight:600;}
-  .tl-org{color:var(--muted); font-size:13.5px; margin-bottom:12px; font-family:'IBM Plex Mono',monospace;}
-  .tl-item ul{margin:0; padding-left:18px; color:var(--muted); font-size:14.5px; line-height:1.7;}
-  .tl-item li{margin-bottom:4px;}
-  .tl-item li::marker{color:var(--cyan);}
-
-  /* ---------- PROJECTS ---------- */
-  .proj-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px;}
-  .proj-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:2px; padding:24px;
-    display:flex; flex-direction:column; gap:12px; transition:border-color .2s, transform .2s;
-  }
-  .proj-card:hover{border-color:var(--amber); transform:translateY(-3px);}
-  .proj-cat{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; color:var(--cyan);}
-  .proj-card h3{font-size:16.5px; font-weight:600; line-height:1.3;}
-  .proj-card p{margin:0; color:var(--muted); font-size:14px; line-height:1.65;}
-  .proj-tags{margin-top:auto; display:flex; gap:6px; flex-wrap:wrap; padding-top:6px;}
-
-  /* ---------- CERTS ---------- */
-  .cert-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
-  .cert-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:2px; padding:18px 20px;
-    display:flex; align-items:center; gap:14px;
-  }
-  .cert-year{font-family:'IBM Plex Mono',monospace; font-size:20px; color:var(--amber); font-weight:600; min-width:52px;}
-  .cert-name{font-size:14px; font-weight:600;}
-  .cert-org{font-size:12px; color:var(--muted); font-family:'IBM Plex Mono',monospace;}
-
-  /* ---------- EDUCATION ---------- */
-  .edu-item{display:grid; grid-template-columns:110px 1fr; gap:20px; padding:18px 0; border-bottom:1px solid var(--line);}
-  .edu-item:last-child{border-bottom:none;}
-  .edu-year{font-family:'IBM Plex Mono',monospace; color:var(--cyan); font-size:13px;}
-  .edu-item h3{font-size:16px; margin-bottom:4px; font-weight:600;}
-  .edu-item p{margin:0; color:var(--muted); font-size:14px;}
-
-  /* ---------- CONTACT / FOOTER ---------- */
-  .contact-panel{
-    background:linear-gradient(160deg, var(--panel), var(--panel-2));
-    border:1px solid var(--line); border-radius:2px; padding:44px 40px;
-    display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap;
-  }
-  .contact-panel h2{font-size:clamp(22px,3vw,30px); margin-bottom:10px;}
-  .contact-panel p{color:var(--muted); margin:0; max-width:44ch; line-height:1.6;}
-  .contact-links{display:flex; flex-direction:column; gap:10px; font-family:'IBM Plex Mono',monospace; font-size:13.5px;}
-  .contact-links a{text-decoration:none; color:var(--text); display:flex; align-items:center; gap:8px;}
-  .contact-links a:hover{color:var(--cyan);}
-  .contact-links .k{color:var(--muted-2); width:70px; display:inline-block;}
-
-  footer{padding:30px 0 50px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted-2);}
+:root{--bg:#0A1226;--s1:#101B36;--s2:#16254A;--line:#24345C;--tx:#E7ECF8;--mu:#93A3C4;--ac:#5B8CFF;--ac2:#FFB454;--on:#06122B}
+[data-theme=light]{--bg:#F5F7FC;--s1:#fff;--s2:#EAF0FB;--line:#D5DDEE;--tx:#0E1A33;--mu:#55627F;--ac:#1F4FE0;--ac2:#B45309;--on:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.65 'Public Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Bricolage Grotesque','Public Sans',sans-serif;margin:0;letter-spacing:-.02em;line-height:1.1}
+a{color:var(--ac)}a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--ac2);outline-offset:3px;border-radius:4px}
+.w{max-width:1120px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:9;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;padding:12px 24px;max-width:1120px;margin:0 auto}
+.bar img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--ac)}
+.bar b{font-family:'Bricolage Grotesque',sans-serif;font-size:17px}
+nav{display:flex;gap:20px;margin-left:auto;font-size:14.5px}nav a{color:var(--mu);text-decoration:none}nav a:hover{color:var(--tx)}
+.b{font:600 14.5px 'Public Sans',sans-serif;border-radius:8px;padding:10px 16px;border:1px solid var(--line);background:none;color:var(--tx);cursor:pointer;text-decoration:none;display:inline-block}
+.b.p{background:var(--ac);border-color:var(--ac);color:var(--on)}.b.p:hover{filter:brightness(1.1)}.b:hover{border-color:var(--ac)}
+@media(max-width:860px){nav{display:none}.bar .b.p{margin-left:auto}}
+.hero{padding:72px 0 56px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,5.2vw,58px);font-weight:700}
+.hero h1 span{display:block;color:var(--mu)}
+.sub{color:var(--mu);font-size:18px;max-width:50ch;margin:22px 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.badge{display:flex;align-items:center;gap:10px;margin-top:26px;text-decoration:none;color:var(--mu);font-size:14px}.badge img{width:46px;height:46px}.badge b{color:var(--tx)}
+.term{background:#070D1D;color:#D6E0F7;border:1px solid var(--line);border-radius:12px;font:400 13.5px/1.6 'JetBrains Mono',monospace;overflow:hidden}
+.term .tb{padding:10px 14px;border-bottom:1px solid #1B2A4D;color:#7F90B5;font-size:12px}
+#out{padding:14px 16px;height:300px;overflow:auto;white-space:pre-wrap}
+#out .c{color:#FFB454}#out .k{color:#7FA6FF}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
+.chips button{font:500 12.5px 'JetBrains Mono',monospace;background:#101B36;color:#AFC2EC;border:1px solid #24345C;border-radius:6px;padding:4px 9px;cursor:pointer}.chips button:hover{border-color:#5B8CFF;color:#fff}
+.in{display:flex;gap:8px;padding:10px 14px;border-top:1px solid #1B2A4D}.in span{color:#FFB454}
+.in input{flex:1;background:none;border:0;color:#fff;font:inherit;min-width:0}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:44px}}
+section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:60px}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+h2{font-size:clamp(26px,3.4vw,38px)}
+.fl{display:flex;gap:8px;flex-wrap:wrap}
+.fl button{font:500 14px 'Public Sans',sans-serif;background:none;color:var(--mu);border:1px solid var(--line);border-radius:99px;padding:6px 14px;cursor:pointer}
+.fl button[aria-pressed=true]{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.card.big{grid-column:1/-1;background:linear-gradient(135deg,var(--s2),var(--s1));border-color:var(--ac)}
+.card h3{font-size:21px}.card p{margin:0;color:var(--mu);font-size:15px}
+.meta{font-size:13px;color:var(--ac2);font-weight:600}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tg i{font:normal 500 12px 'JetBrains Mono',monospace;color:var(--mu);border:1px solid var(--line);border-radius:5px;padding:2px 8px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;color:var(--ac)}
+details ul{margin:10px 0 0;padding-left:20px;color:var(--mu);font-size:14.5px}
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.cert{background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:18px}
+.cert b{display:block;font-size:16px}.cert small{color:var(--mu)}.cert .y{font:600 13px 'JetBrains Mono',monospace;color:var(--ac2)}
+.cert a{font-size:13.5px;margin-right:12px}
+.feat{grid-column:1/-1;display:flex;gap:22px;align-items:center;border-color:var(--ac)}.feat img{width:96px;height:96px;flex:none}
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tabs button{font:600 15px 'Public Sans',sans-serif;background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);padding:8px 4px;margin-right:16px;cursor:pointer}
+.tabs button[aria-selected=true]{color:var(--tx);border-color:var(--ac)}
+.tl{border-left:2px solid var(--line);margin-left:6px}
+.ev{position:relative;padding:0 0 28px 26px}.ev:before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--ac)}
+.ev h3{font-size:19px}.ev .meta{margin-bottom:4px}.ev p{margin:2px 0 8px;color:var(--mu)}.ev ul{margin:0;padding-left:18px;color:var(--mu)}
+.sk{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.sk div{background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:18px}.sk h3{font-size:17px;margin-bottom:10px}
+.end{text-align:center;padding:72px 0}.end h2{font-size:clamp(28px,4vw,46px);margin-bottom:14px}.end p{color:var(--mu);max-width:52ch;margin:0 auto 24px}
+.ct{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:24px;font-size:15px}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--mu);font-size:13px;text-align:center}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
+<header><div class="bar"><img src="assets/photo.jpg" alt="Arsénio de Almeida"><b>Arsénio de Almeida</b>
+<nav><a href="#projetos">Projetos</a><a href="#certificacoes">Certificações</a><a href="#trajetoria">Trajetória</a><a href="#stack">Stack</a><a href="#contacto">Contacto</a></nav>
+<button class="b" id="th" aria-label="Alternar tema claro ou escuro">Tema</button><a class="b p" href="CV_Arsenio_de_Almeida.pdf" download>Descarregar CV</a></div></header>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand"><span class="dot"></span> arsenio@sysadmin <span style="color:var(--muted-2)">— status: disponível</span></div>
-    <nav class="links">
-      <a href="#perfil">Perfil</a>
-      <a href="#skills">Competências</a>
-      <a href="#experiencia">Experiência</a>
-      <a href="#projetos">Projetos</a>
-      <a href="#certificacoes">Certificações</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-    <button class="burger" id="burgerBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
-  </div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#perfil">Perfil</a>
-    <a href="#skills">Competências</a>
-    <a href="#experiencia">Experiência</a>
-    <a href="#projetos">Projetos</a>
-    <a href="#certificacoes">Certificações</a>
-    <a href="#contacto">Contacto</a>
-    <a href="CV_Arsenio_de_Almeida.pdf" target="_blank">↓ Download CV (PDF)</a>
-  </div>
-</header>
+<main class="w">
+<div class="hero">
+ <div>
+  <h1>Redes que funcionam.<span>Servidores que aguentam.</span><span>Sistemas que se defendem.</span></h1>
+  <p class="sub">Sou o Arsénio, técnico de telecomunicações e estudante de Engenharia Informática no ISPTEC. Configuro redes e servidores, estou a especializar-me em segurança e procuro a minha primeira posição em administração de sistemas.</p>
+  <div class="cta"><a class="b p" href="#projetos">Ver projetos</a><a class="b" href="CV_Arsenio_de_Almeida.pdf" download>Descarregar CV</a><a class="b" href="mailto:arsenioduarte200@gmail.com">Contactar</a></div>
+  <a class="badge" href="https://www.credly.com/badges/c107e276-ee72-40e2-8599-8c30f8b6b289" target="_blank" rel="noopener"><img src="assets/cyberops-badge.png" alt="Emblema Cisco CyberOps Associate"><span><b>Cisco CyberOps Associate</b><br>emblema verificado no Credly</span></a>
+ </div>
+ <div class="term" role="region" aria-label="Terminal interativo">
+  <div class="tb">visitante@arsenio: escreve um comando ou toca num botão</div>
+  <div id="out" aria-live="polite"></div>
+  <div class="chips" id="chips"></div>
+  <form class="in" id="f"><span>$</span><input id="i" autocomplete="off" aria-label="Comando" placeholder="help"></form>
+ </div>
+</div>
 
-<main class="wrap">
+<section id="projetos">
+ <div class="hd"><h2>Projetos</h2><div class="fl" id="fl"><button aria-pressed="true" data-f="all">Todos</button><button aria-pressed="false" data-f="srv">Servidores</button><button aria-pressed="false" data-f="net">Redes</button><button aria-pressed="false" data-f="sec">Segurança</button><button aria-pressed="false" data-f="dev">Programação</button><button aria-pressed="false" data-f="iot">IoT</button></div></div>
+ <div class="grid" id="pj">
+  <article class="card big" data-c="srv sec net"><span class="meta">2026 · Digital Ao</span><h3>Infraestrutura Windows Server 2022</h3>
+   <p>Domínio com Active Directory, permissões segundo o modelo AGDLP, GPOs de segurança e DHCP controlado, tudo montado e testado em laboratório.</p>
+   <details><summary>Ver o que foi implementado</summary><ul><li>AD DS: controlador de domínio, OUs, utilizadores e grupos, com criação em massa via CSV e PowerShell.</li><li>Permissões NTFS e de partilha com AGDLP, validadas com testes de acesso negado.</li><li>GPOs: bloqueio de USB, papel de parede corporativo, restrição de acessos e bloqueio de ecrã.</li><li>DHCP: scopes, reservas, filtro por MAC e deteção de conflitos de IP.</li></ul></details>
+   <div class="tg"><i>Windows Server 2022</i><i>Active Directory</i><i>GPO</i><i>AGDLP</i><i>DHCP</i><i>PowerShell</i></div></article>
+  <article class="card" data-c="net"><span class="meta">CFITEL</span><h3>Infraestruturas de redes Cisco</h3><p>Redes com VLAN, DHCP, SSH, VTP, STP, OSPF e EIGRP, com prática de roteamento e administração.</p><div class="tg"><i>Cisco</i><i>VLAN</i><i>OSPF</i><i>EIGRP</i></div></article>
+  <article class="card" data-c="iot dev"><span class="meta">IoT e automação</span><h3>Controlo e monitorização de cargas</h3><p>Arduino e C# a medir cargas elétricas em tempo real com sensores de corrente e relés, evoluído com LoRa para monitorização remota.</p><div class="tg"><i>Arduino</i><i>C#</i><i>LoRa</i></div></article>
+  <article class="card" data-c="dev"><span class="meta">Académico</span><h3>Football Championship Management System</h3><p>Gestão de campeonato em Java, feita em grupo, com dez classes inter-relacionadas e documentação técnica completa.</p><div class="tg"><i>Java</i><i>POO</i><i>Equipa</i></div></article>
+ </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero" style="border-top:none;">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow">Em formação para Administrador de Sistemas</div>
-        <h1>Arsénio de Almeida</h1>
-        <p class="lead" style="margin-top:22px;">Técnico de Telecomunicações e estudante do 3º ano de Engenharia Informática (ISPTEC), a especializar-me em <span class="accent">administração de sistemas</span>: redes Cisco, servidores Windows/Linux e infraestrutura. Base sólida construída em estágio e laboratório — pronto para o próximo desafio em ambiente profissional.</p>
+<section id="certificacoes">
+ <div class="hd"><h2>Certificações</h2></div>
+ <div class="certs">
+  <div class="cert feat"><a href="https://www.credly.com/badges/c107e276-ee72-40e2-8599-8c30f8b6b289" target="_blank" rel="noopener" aria-label="Verificar no Credly"><img src="assets/cyberops-badge.png" alt="Emblema CyberOps Associate"></a><div><span class="y">13 out 2026</span><b style="font-size:20px">Cisco CyberOps Associate</b><small>Cisco Networking Academy, via Delivering Skills</small><br><a href="https://www.credly.com/badges/c107e276-ee72-40e2-8599-8c30f8b6b289" target="_blank" rel="noopener">Verificar no Credly</a><a href="assets/certificados/CyberOps_Associate.pdf" target="_blank" rel="noopener">Ver certificado</a></div></div>
+  <div class="cert"><span class="y">2026</span><b>Administração de Windows Server 2022</b><small>AD DS, GPO, DHCP</small></div>
+  <div class="cert"><span class="y">mai 2026</span><b>White Belt Six Sigma</b><small>RL&amp;Associados</small><br><a href="assets/certificados/White_Belt_Six_Sigma.pdf" target="_blank" rel="noopener">Ver certificado</a></div>
+  <div class="cert"><span class="y">2025</span><b>CCST Cybersecurity</b><small>Cisco</small></div>
+  <div class="cert"><span class="y">2025</span><b>Linux Essentials</b><small>LPI</small></div>
+  <div class="cert"><span class="y">2024</span><b>CCNA v7</b><small>Cisco</small></div>
+ </div>
+</section>
 
-        <div class="status-row">
-          <div class="chip"><span class="led"></span> <b>Disponível</b>&nbsp;para estágio/emprego júnior</div>
-          <div class="chip"><b>3º ano</b>&nbsp;Eng.ª Informática · ISPTEC</div>
-          <div class="chip">Vila Kiaxi, Camama — Luanda</div>
-        </div>
+<section id="trajetoria">
+ <div class="hd"><h2>Trajetória</h2></div>
+ <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-t="a">Experiência</button><button role="tab" aria-selected="false" data-t="b">Educação</button></div>
+ <div class="tl" id="ta">
+  <div class="ev"><span class="meta">2024 · 6 meses</span><h3>Estagiário, MS Telecom</h3><ul><li>Instalação, configuração e manutenção de sistemas GNSS e comunicação via satélite.</li><li>Configuração de equipamentos de rede e comunicação.</li><li>Suporte técnico e diagnóstico de falhas.</li></ul></div>
+  <div class="ev"><span class="meta">2023 a 2024 · 6 meses</span><h3>Técnico de Hardware, Laboratório do ITEL</h3><ul><li>Diagnóstico e reparação de computadores.</li><li>Instalação e configuração de Windows e Linux.</li><li>Configuração de servidores e serviços de rede.</li></ul></div>
+ </div>
+ <div class="tl" id="tb" hidden>
+  <div class="ev"><span class="meta">2024 a 2026</span><h3>ISPTEC</h3><p>Licenciatura em Engenharia Informática, 3º ano.</p></div>
+  <div class="ev"><span class="meta">2020 a 2024</span><h3>ITEL</h3><p>Ensino Médio Técnico em Electrónica e Telecomunicações.</p></div>
+ </div>
+</section>
 
-        <div class="cta-row">
-          <a class="btn btn-primary" href="mailto:arsenioduarte200@gmail.com">Enviar email →</a>
-          <a class="btn btn-ghost" href="tel:+244934601825">Ligar agora</a>
-          <a class="btn btn-outline-amber" href="CV_Arsenio_de_Almeida.pdf" target="_blank">↓ Download CV (PDF)</a>
-        </div>
-      </div>
+<section id="stack">
+ <div class="hd"><h2>Stack</h2></div>
+ <div class="sk">
+  <div><h3>Redes</h3><div class="tg"><i>Packet Tracer</i><i>VLAN</i><i>STP</i><i>VTP</i><i>OSPF</i><i>EIGRP</i><i>DHCP</i><i>SSH</i></div></div>
+  <div><h3>Servidores</h3><div class="tg"><i>Windows Server 2022</i><i>Active Directory</i><i>GPO</i><i>PowerShell</i><i>Linux</i></div></div>
+  <div><h3>Segurança</h3><div class="tg"><i>CyberOps</i><i>CCST Cybersecurity</i><i>NTFS</i><i>AGDLP</i></div></div>
+  <div><h3>Programação</h3><div class="tg"><i>C</i><i>C++</i><i>Python</i><i>Java</i><i>Git</i><i>GitHub</i></div></div>
+  <div><h3>Suporte</h3><div class="tg"><i>Hardware</i><i>Software</i><i>Diagnóstico</i></div></div>
+  <div><h3>Idiomas</h3><div class="tg"><i>Português nativo</i><i>Inglês fluente</i></div></div>
+ </div>
+</section>
 
-      <div class="topo" aria-hidden="true">
-        <svg viewBox="0 0 400 400">
-          <defs>
-            <path id="pathA" d="M200,200 L90,110"/>
-            <path id="pathB" d="M200,200 L310,110"/>
-            <path id="pathC" d="M200,200 L90,290"/>
-            <path id="pathD" d="M200,200 L310,290"/>
-          </defs>
-          <line x1="200" y1="200" x2="90" y2="110" stroke="var(--line-strong)" stroke-width="1"/>
-          <line x1="200" y1="200" x2="310" y2="110" stroke="var(--line-strong)" stroke-width="1"/>
-          <line x1="200" y1="200" x2="90" y2="290" stroke="var(--line-strong)" stroke-width="1"/>
-          <line x1="200" y1="200" x2="310" y2="290" stroke="var(--line-strong)" stroke-width="1"/>
-
-          <circle cx="200" cy="200" r="34" fill="var(--panel)" stroke="var(--cyan)" stroke-width="1.5" class="pulse"/>
-          <text x="200" y="196" text-anchor="middle" class="topo-node-label" style="fill:var(--cyan); font-size:11px;">ARSÉNIO</text>
-          <text x="200" y="210" text-anchor="middle" class="topo-node-label" style="font-size:9px;">FUTURO SYSADMIN</text>
-
-          <circle cx="90" cy="110" r="22" fill="var(--panel)" stroke="var(--line-strong)" stroke-width="1.2"/>
-          <text x="90" y="150" text-anchor="middle" class="topo-node-label">Redes</text>
-
-          <circle cx="310" cy="110" r="22" fill="var(--panel)" stroke="var(--line-strong)" stroke-width="1.2"/>
-          <text x="310" y="150" text-anchor="middle" class="topo-node-label">Servidores</text>
-
-          <circle cx="90" cy="290" r="22" fill="var(--panel)" stroke="var(--line-strong)" stroke-width="1.2"/>
-          <text x="90" y="330" text-anchor="middle" class="topo-node-label">Segurança</text>
-
-          <circle cx="310" cy="290" r="22" fill="var(--panel)" stroke="var(--line-strong)" stroke-width="1.2"/>
-          <text x="310" y="330" text-anchor="middle" class="topo-node-label">Programação</text>
-
-          <circle r="3.2" fill="var(--cyan)" class="packet" style="offset-path:path('M200,200 L90,110'); animation-duration:2.4s;"/>
-          <circle r="3.2" fill="var(--amber)" class="packet" style="offset-path:path('M200,200 L310,110'); animation-duration:3.1s; animation-delay:.4s;"/>
-          <circle r="3.2" fill="var(--cyan)" class="packet" style="offset-path:path('M200,200 L90,290'); animation-duration:2.8s; animation-delay:.8s;"/>
-          <circle r="3.2" fill="var(--amber)" class="packet" style="offset-path:path('M200,200 L310,290'); animation-duration:3.4s; animation-delay:1.2s;"/>
-        </svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- PERFIL -->
-  <section id="perfil">
-    <div class="sec-head reveal"><span class="sec-tag">01</span><h2>Perfil</h2><div class="sec-rule"></div></div>
-    <div class="perfil-panel reveal">
-      <p>Sou <strong>Técnico de Telecomunicações</strong> e estudante do 3º ano de <strong>Engenharia Informática</strong> no ISPTEC, com formação técnica prévia em Electrónica e Telecomunicações pelo ITEL. A minha experiência combina redes de computadores, suporte técnico e configuração de servidores — sempre com o mesmo fio condutor: manter sistemas a funcionar de forma estável e segura.</p>
-      <p>Já passei por estágios em telecomunicações via satélite, laboratórios de hardware e projetos de redes estruturadas com equipamento Cisco. O próximo passo é claro: especializar-me em <strong>administração de sistemas</strong>, aprofundando Linux, segurança e infraestrutura de servidores.</p>
-      <p>Responsável, pontual e proativo, com facilidade em trabalho de equipa e forte disponibilidade para aprender novas tecnologias.</p>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="sec-head reveal"><span class="sec-tag">02</span><h2>Competências</h2><div class="sec-rule"></div></div>
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <span class="skill-index">// NET</span>
-        <h3>Redes de Computadores</h3>
-        <div class="tag-row">
-          <span class="tag">Cisco Packet Tracer</span><span class="tag">VLAN</span><span class="tag">OSPF</span><span class="tag">EIGRP</span><span class="tag">STP</span><span class="tag">VTP</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <span class="skill-index">// SYS</span>
-        <h3>Configuração de Servidores</h3>
-        <div class="tag-row">
-          <span class="tag">Windows Server</span><span class="tag">Linux</span><span class="tag">DHCP</span><span class="tag">SSH</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <span class="skill-index">// DEV</span>
-        <h3>Programação</h3>
-        <div class="tag-row">
-          <span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Java</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <span class="skill-index">// ALG</span>
-        <h3>Estruturas de Dados &amp; Algoritmos</h3>
-        <div class="tag-row">
-          <span class="tag">VSCode</span><span class="tag">GitHub</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <span class="skill-index">// SUP</span>
-        <h3>Suporte Técnico</h3>
-        <div class="tag-row">
-          <span class="tag">Hardware</span><span class="tag">Software</span><span class="tag">Diagnóstico de avarias</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <span class="skill-index">// SEC</span>
-        <h3>Segurança &amp; Boas Práticas</h3>
-        <div class="tag-row">
-          <span class="tag">CCST Cybersecurity</span><span class="tag">Six Sigma</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="lang-row reveal">
-      <div class="lang-item">Português <div class="lang-bar"><span style="width:100%"></span></div> nativo</div>
-      <div class="lang-item">Inglês <div class="lang-bar"><span style="width:88%"></span></div> fluente</div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experiencia">
-    <div class="sec-head reveal"><span class="sec-tag">03</span><h2>Experiência Profissional</h2><div class="sec-rule"></div></div>
-    <div class="timeline">
-      <div class="tl-item reveal">
-        <div class="tl-meta">2024 · 6 MESES</div>
-        <h3>Estagiário</h3>
-        <div class="tl-org">MS Telecom</div>
-        <ul>
-          <li>Instalação, configuração e manutenção de sistemas de comunicação via satélite e GNSS.</li>
-          <li>Integração e configuração de equipamentos de rede e sistemas de comunicação.</li>
-          <li>Prestação de suporte técnico e diagnóstico de falhas em equipamentos e infraestruturas.</li>
-        </ul>
-      </div>
-      <div class="tl-item reveal">
-        <div class="tl-meta">2023 – 2024 · 6 MESES</div>
-        <h3>Técnico de Hardware</h3>
-        <div class="tl-org">Laboratório de Hardware do ITEL</div>
-        <ul>
-          <li>Diagnóstico de avarias e reparação de computadores.</li>
-          <li>Instalação e configuração de sistemas Windows e Linux.</li>
-          <li>Configuração de servidores e serviços de rede.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projetos">
-    <div class="sec-head reveal"><span class="sec-tag">04</span><h2>Projetos &amp; Experiências</h2><div class="sec-rule"></div></div>
-    <div class="proj-grid">
-      <div class="proj-card reveal">
-        <span class="proj-cat">Redes</span>
-        <h3>Criação de Infraestruturas de Redes — CFITEL</h3>
-        <p>Participação na implementação de redes estruturadas utilizando equipamento Cisco, com configuração de VLANs e de serviços essenciais de DHCP, SSH, VTP, STP, OSPF e EIGRP — experiência prática em roteamento e administração de redes.</p>
-        <div class="proj-tags"><span class="tag">Cisco</span><span class="tag">VLAN</span><span class="tag">DHCP/SSH</span><span class="tag">OSPF/EIGRP</span></div>
-        <!-- GITHUB: substitui o href="#" abaixo pelo link real do repositório quando o tiveres -->
-        <a href="#" class="tag" style="color:var(--cyan); border-color:var(--cyan); text-decoration:none; margin-top:4px; display:inline-block; width:fit-content;">↗ Ver no GitHub</a>
-      </div>
-      <div class="proj-card reveal">
-        <span class="proj-cat">IoT · Automação</span>
-        <h3>Sistema de Controlo e Monitoramento de Cargas</h3>
-        <p>Desenvolvimento de um sistema inteligente baseado em Arduino e C#, capaz de monitorizar cargas elétricas em tempo real através de sensores de corrente e relés. Evoluído com comunicação LoRa para monitorização remota de longas distâncias.</p>
-        <div class="proj-tags"><span class="tag">Arduino</span><span class="tag">C#</span><span class="tag">LoRa</span></div>
-        <a href="#" class="tag" style="color:var(--cyan); border-color:var(--cyan); text-decoration:none; margin-top:4px; display:inline-block; width:fit-content;">↗ Ver no GitHub</a>
-      </div>
-      <div class="proj-card reveal">
-        <span class="proj-cat">Académico · Java</span>
-        <h3>Football Championship Management System</h3>
-        <p>Sistema de gestão de campeonato de futebol desenvolvido em grupo, com modelação orientada a objetos em dez classes inter-relacionadas, inspirado na estrutura da La Liga. Entrega com documentação técnica completa e apresentação formal.</p>
-        <div class="proj-tags"><span class="tag">Java</span><span class="tag">POO</span><span class="tag">Trabalho em equipa</span></div>
-        <a href="#" class="tag" style="color:var(--cyan); border-color:var(--cyan); text-decoration:none; margin-top:4px; display:inline-block; width:fit-content;">↗ Ver no GitHub</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section id="certificacoes">
-    <div class="sec-head reveal"><span class="sec-tag">05</span><h2>Certificações &amp; Formações</h2><div class="sec-rule"></div></div>
-    <div class="cert-row">
-      <div class="cert-card reveal">
-        <div class="cert-year">26</div>
-        <div><div class="cert-name">White Belt Six Sigma</div><div class="cert-org">Melhoria de processos</div></div>
-      </div>
-      <div class="cert-card reveal">
-        <div class="cert-year">25</div>
-        <div><div class="cert-name">CCST Cybersecurity</div><div class="cert-org">Cisco</div></div>
-      </div>
-      <div class="cert-card reveal">
-        <div class="cert-year">25</div>
-        <div><div class="cert-name">Linux Essentials</div><div class="cert-org">LPI</div></div>
-      </div>
-      <div class="cert-card reveal">
-        <div class="cert-year">24</div>
-        <div><div class="cert-name">CCNA</div><div class="cert-org">Cisco Certified Network Associate</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="educacao">
-    <div class="sec-head reveal"><span class="sec-tag">06</span><h2>Educação</h2><div class="sec-rule"></div></div>
-    <div class="reveal">
-      <div class="edu-item">
-        <div class="edu-year">2024 – 2026</div>
-        <div>
-          <h3>Instituto Superior Politécnico de Tecnologias e Ciências — ISPTEC</h3>
-          <p>Licenciatura em Engenharia Informática · 3º ano (em curso)</p>
-        </div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-year">2020 – 2024</div>
-        <div>
-          <h3>Instituto de Telecomunicações — ITEL</h3>
-          <p>Ensino Médio Técnico em Electrónica e Telecomunicações</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contacto">
-    <div class="sec-head reveal"><span class="sec-tag">07</span><h2>Contacto</h2><div class="sec-rule"></div></div>
-    <div class="contact-panel reveal">
-      <div>
-        <h2>Vamos falar de redes,<br>servidores ou uma oportunidade?</h2>
-        <p>Disponível para estágios, projetos e oportunidades na área de infraestrutura de TI e administração de sistemas.</p>
-      </div>
-      <div class="contact-links">
-        <a href="mailto:arsenioduarte200@gmail.com"><span class="k">email</span> arsenioduarte200@gmail.com</a>
-        <a href="tel:+244934601825"><span class="k">telefone</span> +244 934 601 825</a>
-        <a href="tel:+244929657984"><span class="k">alt.</span> +244 929 657 984</a>
-        <a href="#" onclick="return false;" style="cursor:default;"><span class="k">local</span> Vila Kiaxi, Camama — Luanda</a>
-        <a href="#" onclick="return false;" style="cursor:default;"><span class="k">linkedin</span> Arsénio de Almeida</a>
-        <a href="CV_Arsenio_de_Almeida.pdf" target="_blank" style="color:var(--amber);"><span class="k">cv</span> Download CV (PDF) ↓</a>
-      </div>
-    </div>
-  </section>
-
+<section id="contacto" class="end">
+ <h2>Vamos montar algo sólido?</h2>
+ <p>Estou disponível para estágios e posições juniores em infraestrutura de TI, redes e segurança.</p>
+ <div class="cta" style="justify-content:center"><a class="b p" href="mailto:arsenioduarte200@gmail.com">Enviar email</a><a class="b" href="CV_Arsenio_de_Almeida.pdf" download>Descarregar CV</a><a class="b" href="https://www.linkedin.com/in/ars%C3%A9nio-de-almeida-2a6aa8345" target="_blank" rel="noopener">LinkedIn</a></div>
+ <div class="ct"><a href="tel:+244934601825">+244 934 601 825</a><a href="tel:+244929657984">+244 929 657 984</a><span>Camama, Luanda</span></div>
+</section>
 </main>
-
-<footer>arsenio.de.almeida — build 2026 · rede online · a caminho de administrador de sistemas</footer>
+<footer>© 2026 Arsénio de Almeida</footer>
 
 <script>
-  const items = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.12});
-  items.forEach(i=>io.observe(i));
-
-  const burger = document.getElementById('burgerBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  burger.addEventListener('click', ()=> mobileMenu.classList.toggle('open'));
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> mobileMenu.classList.remove('open')));
+const $=s=>document.querySelector(s),R=document.documentElement;
+try{const t=localStorage.getItem('th');if(t)R.dataset.theme=t}catch(e){}
+$('#th').onclick=()=>{const t=R.dataset.theme==='dark'?'light':'dark';R.dataset.theme=t;try{localStorage.setItem('th',t)}catch(e){}};
+$('#fl').onclick=e=>{const f=e.target.dataset.f;if(!f)return;document.querySelectorAll('#fl button').forEach(b=>b.setAttribute('aria-pressed',b===e.target));document.querySelectorAll('#pj .card').forEach(c=>c.hidden=!(f==='all'||c.dataset.c.split(' ').includes(f)))};
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));$('#ta').hidden=b.dataset.t!=='a';$('#tb').hidden=b.dataset.t!=='b'});
+const C={
+help:'Comandos: whoami, certs, stack, projects, contact, cv, theme, clear',
+whoami:'Arsénio de Almeida\nTécnico de Telecomunicações, 3º ano de Engenharia Informática (ISPTEC).\nFoco: administração de sistemas, redes e cibersegurança.',
+certs:'CyberOps Associate (2026)\nAdministração de Windows Server 2022 (2026)\nWhite Belt Six Sigma (2026)\nCCST Cybersecurity (2025)\nLinux Essentials (2025)\nCCNA v7 (2024)',
+stack:'Redes: VLAN, STP, OSPF, EIGRP, DHCP\nServidores: Windows Server, Active Directory, GPO, PowerShell, Linux\nProgramação: C, C++, Python, Java',
+projects:'1. Infraestrutura Windows Server 2022\n2. Redes Cisco (CFITEL)\n3. Monitorização de cargas (Arduino, LoRa)\n4. Football Championship (Java)',
+contact:'arsenioduarte200@gmail.com\n+244 934 601 825\nCamama, Luanda'};
+const out=$('#out'),say=(c,t)=>{const d=document.createElement('div');d.innerHTML='<span class="c">$</span> <span class="k">'+c+'</span>';out.append(d);const r=document.createElement('div');r.textContent=t||'';r.style.marginBottom='8px';out.append(r);out.scrollTop=out.scrollHeight};
+function run(c){c=c.trim().toLowerCase();if(!c)return;if(c==='clear'){out.textContent='';return}
+if(c==='theme'){$('#th').click();return say(c,'Tema alterado.')}
+if(c==='cv'){say(c,'A descarregar o CV...');const a=document.createElement('a');a.href='CV_Arsenio_de_Almeida.pdf';a.download='';a.click();return}
+say(c,C[c]||'Comando não encontrado. Escreve help.')}
+['whoami','certs','stack','projects','contact','cv'].forEach(c=>{const b=document.createElement('button');b.type='button';b.textContent=c;b.onclick=()=>run(c);$('#chips').append(b)});
+$('#f').onsubmit=e=>{e.preventDefault();run($('#i').value);$('#i').value=''};
+run('whoami');
 </script>
 </body>
 </html>
